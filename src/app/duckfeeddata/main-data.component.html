@@ -1,0 +1,78 @@
+<mat-card>
+  <mat-card-header>Duck Feed Details</mat-card-header>
+  <form (submit)="onDuckFeedSubmit(dfForm)" #dfForm="ngForm">
+  <mat-card-content>
+  <mat-form-field class="full-width">
+    <input matInput
+    type="number"
+    min="1"
+    placeholder="Number of Ducks" value=""
+    required
+    ngModel
+    name='duckCount'
+    #duckCount="ngModel">
+    <mat-error *ngIf="duckCount.invalid">Please a valid number of Ducks</mat-error>
+  </mat-form-field>
+
+  <mat-form-field class="full-width">
+      <mat-label>Type Of Feed</mat-label>
+        <mat-select [(ngModel)]="feedTypeDefault.id" name="feedType" #ft="ngModel" (change)="onChoose($event.target.value)">
+          <mat-option *ngFor="let duckFeedType of feedTypes" value={{duckFeedType.feedType}}>{{ duckFeedType.feedType }}</mat-option>
+        </mat-select>
+        <mat-error *ngIf="ft.invalid">Choose a feed Type!</mat-error>
+  </mat-form-field>
+
+  <mat-form-field class="full-width">
+    <mat-label>Feed</mat-label>
+    <mat-select ngModel name="feed" #feed="ngModel">
+    <mat-option *ngFor="let duckFeed of duckFeedContent"
+    required
+    value={{duckFeed.id}}>{{ duckFeed.feedContent }}</mat-option>
+    </mat-select>
+    <mat-error *ngIf="feed.invalid">Choose a feed variant from the list</mat-error>
+  </mat-form-field>
+
+<mat-form-field class="full-width">
+  <mat-label>Feed Quantity</mat-label>
+  <input type="number"
+   name="feedQuantity"
+   matInput
+   placeholder="Feed quantity in g"
+   required
+   ngModel value=""
+   min="0"
+   #feedQuantity="ngModel">
+   <mat-error *ngIf="feedQuantity.invalid">Please enter a valid quantity in g</mat-error>
+</mat-form-field>
+
+<mat-form-field class="full-width">
+    <mat-label>Time Of Feeding</mat-label>
+    <input matInput placeholder="Time:"
+      [(ngModel)]="dateTime2"
+      ngModel
+      name="time"
+      required
+      [owlDateTimeTrigger]="dt2" [owlDateTime]="dt2"
+      #time="ngModel">
+      <owl-date-time [pickerType]="'timer'" #dt2></owl-date-time>
+      <mat-error *ngIf="time.invalid">Please enter a valid time.</mat-error>
+</mat-form-field>
+
+  <mat-form-field class="full-width">
+      <mat-label>Location</mat-label>
+      <mat-select placeholder="Location" name="location" ngModel #selectCountry="ngModel">
+        <mat-option
+        value={{country.countryName}}
+        *ngFor="let country of countries">{{country.countryName}}
+      </mat-option>
+    </mat-select>
+    <mat-error * ngIf="selectCountry.invalid">Choose a country from the list.</mat-error>
+  </mat-form-field>
+</mat-card-content>
+<mat-card-actions>
+    <mat-checkbox placeholder="Discplined duckies?" ngModel value="" name="scheduled">Schedule this feed on a daily basis? </mat-checkbox>
+  <button mat-button color="primary" type="submit">SUBMIT</button>
+</mat-card-actions>
+</form>
+</mat-card>
+
