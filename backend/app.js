@@ -7,14 +7,12 @@ const config = require("./config");
 
 const app = express();
 
-
-
-mongoose.connect(config.dbURL, { useNewUrlParser: true })
+mongoose.connect("mongodb+srv://abhay:8WJubO6ttjHGMd8R@cluster0-cyugp.mongodb.net/ducksfeeddata?retryWrites=true", { useNewUrlParser: true })
 .then(()=>{
   console.log("Connected to DB..");
 })
 .catch(()=>{
-  console.log('conn unsucessful!!');
+  console.log('conn unsuccessful!!');
 });
 
 app.use(bodyParser.json());
