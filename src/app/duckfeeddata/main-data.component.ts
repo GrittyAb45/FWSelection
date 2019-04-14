@@ -22,7 +22,12 @@ export class MainDataComponent implements OnInit {
   public feedTypes: DuckFeedType[];
   public duckFeedContent: DuckFeedContent[];
   public dateTime2: Date;
-  private duckFeedTimeUTC;
+  public name: string;
+  public email: string;
+  public phone: string;
+  public infoMsgFlag = false;
+  public checkboxValue = false;
+  private duckFeedTimeUTC: moment.Moment;
 
   constructor(
     public countrySelectService: CountrySelectService,
@@ -46,23 +51,45 @@ export class MainDataComponent implements OnInit {
     if (dfForm.invalid) {
       return;
     }
+    this.name = dfForm.value.name;
+    this.email = dfForm.value.email;
+    this.phone = dfForm.value.phone;
+
+    if (this.name === '') {
+      this.name = 'Not provided';
+    }
+
+    if (this.email === '') {
+      this.email = 'Not provided';
+    }
+
+    if (this.phone === '') {
+      this.phone = 'Not provided';
+    }
 
     this.duckFeedTimeUTC = moment.utc(dfForm.value.time);
-    console.log(this.duckFeedTimeUTC);
 
     const duckFeed: DuckFeed = {
+      ownerName: dfForm.value.ownerName,
+      email: this.email,
+      phone: this.phone,
       noOfDucks: dfForm.value.duckCount,
       feedType: dfForm.value.feedType,
       feedContent: dfForm.value.feed,
       feedQuantity: dfForm.value.feedQuantity,
       time: dfForm.value.time,
       location: dfForm.value.location,
-      scheduled: dfForm.value.scheduled
+      scheduled: this.checkboxValue
     };
 
     console.log(duckFeed);
     this.handleDuckFeedService.sendDuckFeed(duckFeed);
-    //this.dfForm.reset();
+    this.infoMsgFlag = true;
+    setTimeout(() => {
+      this.infoMsgFlag = false;
+      dfForm.resetForm();
+      } , 3000);
+
   }
 
 }
