@@ -3,7 +3,8 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: true,
+  apiUrl: "Ducksfeedtracker-env.tmh8xdbw8g.us-east-2.elasticbeanstalk.com"
 };
 
 /*
