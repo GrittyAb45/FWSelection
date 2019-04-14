@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import * as moment from 'moment';
 import { Country } from '../country.model';
 import { CountrySelectService } from '../country-select.service';
 import { DuckFeedType } from '../duck-feed-type.model';
@@ -21,6 +22,7 @@ export class MainDataComponent implements OnInit {
   public feedTypes: DuckFeedType[];
   public duckFeedContent: DuckFeedContent[];
   public dateTime2: Date;
+  private duckFeedTimeUTC;
 
   constructor(
     public countrySelectService: CountrySelectService,
@@ -44,6 +46,10 @@ export class MainDataComponent implements OnInit {
     if (dfForm.invalid) {
       return;
     }
+
+    this.duckFeedTimeUTC = moment.utc(dfForm.value.time);
+    console.log(this.duckFeedTimeUTC);
+
     const duckFeed: DuckFeed = {
       noOfDucks: dfForm.value.duckCount,
       feedType: dfForm.value.feedType,
@@ -56,7 +62,7 @@ export class MainDataComponent implements OnInit {
 
     console.log(duckFeed);
     this.handleDuckFeedService.sendDuckFeed(duckFeed);
-
+    //this.dfForm.reset();
   }
 
 }

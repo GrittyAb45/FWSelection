@@ -1,10 +1,13 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
+const cron = require("node-cron");
 const DuckfeedModel = require('./models/duckfeed');
 const config = require("./config");
 
 const app = express();
+
+
 
 mongoose.connect(config.dbURL, { useNewUrlParser: true })
 .then(()=>{
@@ -33,7 +36,29 @@ app.use((req, res, next) => {
 app.post("/api/duckfeed",(req, res, next) => {
 
   const duckfeed = new DuckfeedModel(req.body);
-console.log(duckfeed);
+
+  if(duckfeed.scheduled){
+
+  //console.log(cron.validate);
+
+    let task = cron.schedule(
+        (duckfeed.time.getUTCSeconds()
+    +' '+duckfeed.time.getUTCMinutes()
+    +' '+duckfeed.time.getUTCHours()
+    +' '
+    +'*'
+    +' '
+    +'*'
+    +' '
+    +'*'), ()=>
+    {
+    console.log('Cron under execution....\n');
+    duckfeed.save();
+    });
+
+    task.start();
+
+  }
 duckfeed.save();
 res.status(201).json({
   status: "201",
