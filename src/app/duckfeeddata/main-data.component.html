@@ -1,6 +1,8 @@
 <mat-card>
 
-  <mat-card-header>Duck Feed Details</mat-card-header>
+  <mat-card-header>
+    <span>Duck Feed Details</span>
+  </mat-card-header>
 
   <form (submit)="onDuckFeedSubmit(dfForm)" #dfForm="ngForm">
 
@@ -54,7 +56,7 @@
 
       <mat-form-field class="full-width">
         <mat-label>Type Of Feed</mat-label>
-        <mat-select [(ngModel)]="feedTypeDefault.id" name="feedType" #ft="ngModel" (change)="onChoose($event.target.value)">
+        <mat-select [(ngModel)]="feedTypeDefault.id" name="feedType" #ft="ngModel" (change)="onChoose($event.target.value)" required>
           <mat-option *ngFor="let duckFeedType of feedTypes" value={{duckFeedType.feedType}}>{{ duckFeedType.feedType }}</mat-option>
         </mat-select>
         <mat-error *ngIf="ft.invalid">Choose a feed Type!</mat-error>
@@ -62,7 +64,7 @@
 
       <mat-form-field class="full-width">
         <mat-label>Feed</mat-label>
-        <mat-select ngModel name="feed" #feed="ngModel">
+        <mat-select ngModel name="feed" #feed="ngModel" value="Processed" required>
       <mat-option *ngFor="let duckFeed of duckFeedContent"
         required
         value={{duckFeed.id}}>{{ duckFeed.feedContent }}</mat-option>
@@ -98,7 +100,7 @@
 
   <mat-form-field class="full-width">
       <mat-label>Location</mat-label>
-      <mat-select placeholder="Location" name="location" ngModel #selectCountry="ngModel">
+      <mat-select placeholder="Location" name="location" ngModel value="Canada" #selectCountry="ngModel" required>
         <mat-option
         value={{country.countryName}}
         *ngFor="let country of countries">{{country.countryName}}
@@ -106,10 +108,16 @@
       </mat-select>
         <mat-error * ngIf="selectCountry.invalid">Choose a country from the list.</mat-error>
     </mat-form-field>
+
+      <input type="checkbox"
+      placeholder="Discplined duckies?"
+      [(ngModel)]="checkboxValue"
+      (change) = "getCheckBoxvalue($event)"
+      name="scheduled">Schedule this feed on a daily basis?
+
 </mat-card-content>
 <mat-card-actions>
-  <mat-checkbox placeholder="Discplined duckies?" ngModel [(ngModel)]="checkboxValue" name="scheduled">Schedule this feed on a daily basis? </mat-checkbox>
-    <button mat-button color="primary" type="submit">SUBMIT</button>
+    <button mat-raised-button color="primary" type="submit">SUBMIT</button>
       <p *ngIf="infoMsgFlag">Thank you for your input. Much appreciated!!</p>
 </mat-card-actions>
 </form>

@@ -1,5 +1,7 @@
 
-
+/*
+This model acts as a bluepreint as well as a container in building requests and for proper DB storage as a collection
+*/
 export class DuckFeed{
 
 // tslint:disable-next-line: max-line-length

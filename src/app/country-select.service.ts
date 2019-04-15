@@ -20,7 +20,7 @@ countriesList: Country[] = [
   new Country('Zambia')
 ];
 
-// Return List of countries as a new array
+// Returns List of countries as a new array
   getCountries() {
     return [...this.countriesList];
   }

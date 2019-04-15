@@ -1,3 +1,8 @@
+/* The MainDataComponent is the core component of this Application. It receives data from the user and verifies/validates
+ accordingly with data models and forwards the requests to the server and also processes the response from the server
+
+ @Abhay
+*/
 import { Component, OnInit } from '@angular/core';
 import * as moment from 'moment';
 import { Country } from '../country.model';
@@ -42,11 +47,18 @@ export class MainDataComponent implements OnInit {
 
   }
 
+  // This method provides options in the dropdown feed and feedtypes
   onChoose(feedTypeId) {
 
     this.duckFeedContent = this.duckFeedService.getFeeds().filter((feed) => feed.feedTypeId = feedTypeId);
   }
 
+  getCheckBoxvalue(event){
+    console.log(event.target.checked);
+  }
+
+  // this method gets triggered upon the submit click action; gathers user input and calls handle duck feed service methods
+  // to send http requests
   onDuckFeedSubmit(dfForm: NgForm) {
     if (dfForm.invalid) {
       return;
@@ -88,7 +100,7 @@ export class MainDataComponent implements OnInit {
     setTimeout(() => {
       this.infoMsgFlag = false;
       dfForm.resetForm();
-      } , 3000);
+      } , 7000);
 
   }
 

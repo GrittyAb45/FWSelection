@@ -1,3 +1,10 @@
+/* The duckfeed.js enables the middleware to validate DB collection foramt with the incoming requests from the UI using a Schema
+
+based on Mongoose package.
+
+@Author Abhay
+*/
+
 const mongoose = require("mongoose");
 const uniqueValidator = require("mongoose-unique-validator");
 

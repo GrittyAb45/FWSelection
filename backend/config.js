@@ -1,3 +1,4 @@
 module.exports = {
-  dbURL : "mongodb+srv://abhay:8WJubO6ttjHGMd8R@cluster0-cyugp.mongodb.net/test?retryWrites=true"
+  dbURL : "mongodb+srv://abhay:jonsnow1@cluster0-lqilb.mongodb.net/DucksFeed?retryWrites=true",
+  dbLocal: "mongodb://localhost:27017/DucksFeed"
 }
