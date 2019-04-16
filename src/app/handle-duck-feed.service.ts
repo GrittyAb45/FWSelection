@@ -4,6 +4,9 @@
 import { DuckFeed } from './duck-feed.model';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { environment } from 'src/environments/environment';
+
+const serverUrl = environment.apiUrl;
 
 @Injectable()
 export class HandleDuckFeedService{
@@ -13,7 +16,7 @@ export class HandleDuckFeedService{
 // This method performs the HTTP POST operaton and sends requests and handles response from the server
   sendDuckFeed(duckFeedObj: DuckFeed) {
     const duckFeed = duckFeedObj;
-    this.http.post<{message: string}>('http://localhost:3000/api/duckfeed', duckFeed)
+    this.http.post<{message: string}>(serverUrl + '/duckfeed', duckFeed)
     .subscribe((response) =>{
       console.log(response.message);
     });

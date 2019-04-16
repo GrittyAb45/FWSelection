@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  apiUrl: "Ducksfeedtracker-env.tmh8xdbw8g.us-east-2.elasticbeanstalk.com/api"
+  apiUrl: 'Duckfeedtracker-env-1.s2uymi7but.us-east-2.elasticbeanstalk.com/api'
 };

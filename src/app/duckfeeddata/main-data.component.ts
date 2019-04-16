@@ -54,7 +54,7 @@ export class MainDataComponent implements OnInit {
   }
 
   getCheckBoxvalue(event){
-    console.log(event.target.checked);
+    this.checkboxValue = event.target.checked;
   }
 
   // this method gets triggered upon the submit click action; gathers user input and calls handle duck feed service methods
@@ -67,15 +67,15 @@ export class MainDataComponent implements OnInit {
     this.email = dfForm.value.email;
     this.phone = dfForm.value.phone;
 
-    if (this.name === '') {
+    if (this.name === '' || this.name === null) {
       this.name = 'Not provided';
     }
 
-    if (this.email === '') {
+    if (this.email === '' || this.email === null) {
       this.email = 'Not provided';
     }
 
-    if (this.phone === '') {
+    if (this.phone === '' || this.phone === null) {
       this.phone = 'Not provided';
     }
 

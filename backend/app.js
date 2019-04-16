@@ -8,18 +8,17 @@ The middleware express and server where node runs interract via app.js
 const express = require("express");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
-const cron = require("node-cron");
-const DuckfeedModel = require('./models/duckfeed');
+
 const config = require("./config");
+const routes = require('./routes/duckfeedCreate');
+
 
 //Initialize middleware
 const app = express();
 
 // Connect to the MongoDB Server/Cluster
 mongoose.connect(config.dbURL,
-{ useNewUrlParser: true }, function(error){
-  if(error) return console.error(error);
-})
+{ useNewUrlParser: true })
 .then(()=>{
   console.log("Connected to DB..");
 })
@@ -45,67 +44,6 @@ app.use((req, res, next) => {
   next();
 });
 
-// Add/Create duckfeed data into the DB collection
-app.post("/api/duckfeed",(req, res, next) => {
-
-  const duckfeed = new DuckfeedModel(req.body);
-  console.log("sch value is:"+duckfeed.scheduled);
-
- //Checks if user wants the duck feed process to be enabled on daily basis
-  if(duckfeed.scheduled){
-
-    //Checks if the CRON pattern for schedule is correct
-  console.log("CRON job pattern valid:"+cron.validate(
-    duckfeed.time.getUTCSeconds()
-+' '+duckfeed.time.getUTCMinutes()
-+' '+duckfeed.time.getUTCHours()
-+' '
-+'*'
-+' '
-+'*'
-+' '
-+'*'));
-
-// Establishes the cronjob to trigger daily duck feed submit operation to help a small old lady.
-    let task = cron.schedule(
-        (duckfeed.time.getUTCSeconds()
-    +' '+duckfeed.time.getUTCMinutes()
-    +' '+duckfeed.time.getUTCHours()
-    +' '
-    +'*'
-    +' '
-    +'*'
-    +' '
-    +'*'), ()=>
-    {
-    console.log('Cron under execution....\n');
-    duckfeed.save()
-    .then(res => {
-      res.status(201).json({
-        message: "CronJob executed, ducks are fed as scheduled"
-      });
-    })
-    .catch(error => {
-      error.status(500).json({
-        message:"Unable to feed Ducks as per schedule"
-      })
-    });
-  });
-
-    task.start();
-
-  }
-duckfeed.save()
-.then(cronCreated => {
-  res.status(201).json({
-    message: "Successfully saved all of DucksFeed Info!"
-  });
-})
-.catch(error => {
-  res.status(500).json({
-    message:"Failed to Save the info provided!"
-  })
-});
-});
+app.use("/api/duckfeed", routes);
 
 module.exports = app;
