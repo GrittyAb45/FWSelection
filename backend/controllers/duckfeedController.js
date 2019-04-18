@@ -68,4 +68,24 @@ exports.duckfeedNotScheduled = (req, res, next) => {
   });
 };
 
+exports.getDuckfeeds = (req, res, next) => {
+
+  let accData;
+
+  duckfeedModel.find()
+  .then((data) => {
+    accData = data;
+    return duckfeedModel.count;
+  })
+  .then((count) =>{
+    res.status(200).json({
+      duckfeeds:accData,
+      feedCount: count
+    })}).catch((err) =>{
+      res.status(500).json({
+        message:"unable to fetch data!"
+      })
+    });
+}
+
 

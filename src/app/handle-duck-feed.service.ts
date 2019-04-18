@@ -1,10 +1,12 @@
 /* This Service provides an interface to communicate with the Backend NodeJs Server with GUI form values
 @Abhay
 */
+import { from } from 'rxjs';
 import { DuckFeed } from './duck-feed.model';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { environment } from 'src/environments/environment';
+import { environment } from '../environments/environment';
+
 
 const serverUrl = environment.apiUrl;
 
@@ -16,10 +18,10 @@ export class HandleDuckFeedService{
 // This method performs the HTTP POST operaton and sends requests and handles response from the server
   sendDuckFeed(duckFeedObj: DuckFeed) {
     const duckFeed = duckFeedObj;
-    if(duckFeed.scheduled!==null && duckFeed.scheduled){
+    if ( duckFeed.scheduled !== null && duckFeed.scheduled ) {
 
       this.http.post<{message: string}>(serverUrl + '/duckfeed/scheduled', duckFeed)
-      .subscribe((response) =>{
+      .subscribe((response) => {
         console.log(response.message);
       });
 
@@ -28,5 +30,8 @@ export class HandleDuckFeedService{
     .subscribe((response) =>{
       console.log(response.message);
     });
+  }
+  fetchReport() {
+    return this.http.get((serverUrl + '/duckfeed')).pipe(result => result);
   }
 }

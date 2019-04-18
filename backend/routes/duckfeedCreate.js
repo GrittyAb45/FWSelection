@@ -6,4 +6,6 @@ router.post("", duckfeedController.duckfeedNotScheduled);
 
 router.post("/scheduled", duckfeedController.createDuckfeed);
 
+router.get("", duckfeedController.getDuckfeeds)
+
 module.exports = router;

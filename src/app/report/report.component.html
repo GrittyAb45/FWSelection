@@ -1,0 +1,18 @@
+<mat-card>
+  <mat-card-header>Country wise Ducks number</mat-card-header>
+  <mat-card-content>
+    <div *ngIf="chart">
+        <canvas #canvas id="canvas" width="400" height="200">{{ chart }}</canvas>
+      </div>
+    </mat-card-content>
+      </mat-card>
+      <mat-card>
+        <mat-card-header>Net Feed consumption ratio (Global)</mat-card-header>
+        <mat-card-content>
+      <br>
+      <div *ngIf="chart2">
+          <canvas #canvas1 id="canvas1">{{ chart2 }}</canvas>
+        </div>
+      </mat-card-content>
+      </mat-card>
+
