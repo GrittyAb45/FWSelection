@@ -8,6 +8,7 @@
     "moment": "^2.24.0",
     "mongoose": "^5.5.1",
     "node-cron": "^2.0.3",
+    "cron": "^1.7.0",
     "mongoose-unique-validator": "^2.0.2"
   }
 }

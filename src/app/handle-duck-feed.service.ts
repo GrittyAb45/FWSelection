@@ -16,6 +16,14 @@ export class HandleDuckFeedService{
 // This method performs the HTTP POST operaton and sends requests and handles response from the server
   sendDuckFeed(duckFeedObj: DuckFeed) {
     const duckFeed = duckFeedObj;
+    if(duckFeed.scheduled!==null && duckFeed.scheduled){
+
+      this.http.post<{message: string}>(serverUrl + '/duckfeed/scheduled', duckFeed)
+      .subscribe((response) =>{
+        console.log(response.message);
+      });
+
+    }
     this.http.post<{message: string}>(serverUrl + '/duckfeed', duckFeed)
     .subscribe((response) =>{
       console.log(response.message);
